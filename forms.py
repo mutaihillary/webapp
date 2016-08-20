@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, BooleanField, PasswordField, validators
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, email
 CSRF_ENABLED = True
 
 
@@ -18,3 +18,4 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
     # accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+
