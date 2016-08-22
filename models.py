@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
-from todoapp import app
+#from flask.ext.sqlalchemy import SQLAlchemy
+from flask import app
 
 db = SQLAlchemy(app)
 

@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, flash,url_for
 from models import Category, Todo, Priority, db
-from todoapp import app
+from flask import app
 
 
 @app.route('/')
