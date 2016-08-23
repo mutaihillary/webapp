@@ -1,6 +1,18 @@
 from flask import render_template, request, redirect, flash,url_for
 from models import Category, Todo, Priority, db
 from flask import app
+from flask import logging
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template(
+        'profile.html',
+        content='Profile Page',
+        twitter_conn=social.twitter.get_connection(),
+        facebook_conn=social.facebook.get_connection(),
+        foursquare_conn=social.foursquare.get_connection())
 
 
 @app.route('/')
@@ -8,7 +20,7 @@ def list_all():
     return render_template(
         'list.html',
         categories=Category.query.all(),
-        todos=Todo.query.all(),#join(Priority).order_by(Priority.value.desc())
+        todos=Todo.query.all(),
     )
 
 
@@ -17,7 +29,7 @@ def list_todos(name):
     category = Category.query.filter_by(name=name).first()
     return render_template(
         'list.html',
-        todos=Todo.query.filter_by(category=category).all(),# .join(Priority).order_by(Priority.value.desc()),
+        todos=Todo.query.filter_by(category=category).all(),
         categories=Category.query.all(),
 
     )
@@ -27,8 +39,6 @@ def list_todos(name):
 def new():
     if request.method == 'POST':
         category = Category.query.filter_by(id=request.form['category']).first()
-        #priority = Priority.query.filter_by(id=request.form['priority']).first()
-        #todo = Todo(category=category, priority=priority, description=request.form['description'])
         todo = Todo(category=category, description=request.form['description'])
         db.session.add(todo)
         db.session.commit()
@@ -38,7 +48,6 @@ def new():
             'new-task.html',
             page='new-task',
             categories=Category.query.all(),
-            #priorities=Priority.query.all()
         )
 
 
@@ -50,14 +59,11 @@ def update_todo(todo_id):
             'new-task.html',
             todo=todo,
             categories=Category.query.all(),
-            #priorities=Priority.query.all()
         )
     else:
         category = Category.query.filter_by(id=request.form['category']).first()
-        #priority = Priority.query.filter_by(id=request.form['priority']).first()
         description = request.form['description']
         todo.category = category
-        #todo.priority = priority
         todo.description = description
         db.session.commit()
         return redirect('/')
