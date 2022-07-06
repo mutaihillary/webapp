@@ -39,7 +39,7 @@ httplib2==0.8
 itsdangerous==0.24
 lockfile==0.8
 logilab-common==0.61.0
-lxml==3.3.3
+lxml==4.9.1
 oauthlib==0.6.1
 oneconf==0.3.7.14.04.1
 pbr==1.10.0
